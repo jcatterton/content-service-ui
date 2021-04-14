@@ -1,0 +1,21 @@
+@import "../../app.component.scss";
+
+html {
+  background-color: green;
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.buttons {
+  button {
+    margin-right: 10px;
+    width: 120px;
+    color: white;
+    border-color: white;
+  }
+}

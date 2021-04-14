@@ -1,0 +1,105 @@
+<div class="spinner-wrapper" *ngIf="loading">
+  <mat-spinner class="loading-spinner"></mat-spinner>
+</div>
+<div class="page-wrapper">
+  <mat-card class="sidebar">
+    <div class="logo-container">
+      <img [src]="logoURL | secure | async">
+    </div>
+    <div style="height: 1px; border-bottom: solid 1px black;"></div>
+    <div class="button-container">
+      <button
+        mat-stroked-button
+        class="sidebar-button"
+        (click)="uploader.click()"
+      ><mat-icon [inline]="true" matPrefix class="sidebar-cion">upload</mat-icon>Upload File</button>
+      <input
+        hidden
+        type="file"
+        #uploader
+        (change)="uploadFile($event)"
+      />
+      <button
+        mat-stroked-button
+        (click)="toggleHiddenFiles()"
+        [ngClass]="showHiddenFiles ? 'sidebar-button-pressed' : 'sidebar-button'"
+      >Show Hidden Files</button>
+      <button
+        mat-stroked-button
+        (click)="toggleMultiSelect()"
+        [ngClass]="multiSelect ? 'sidebar-button-pressed' : 'sidebar-button'"
+      >Multi-Select</button>
+      <button
+        mat-stroked-button
+        (click)="downloadSelectedFiles()"
+        class="sidebar-button"
+        *ngIf="multiSelect && selectedFiles.length > 0"
+      >Download Selected ({{selectedFiles.length}})</button>
+    </div>
+    <div style="height: 1px; border-bottom: solid 1px black;"></div>
+    <div class="stat-container">
+      <span>Total Files: {{ getTotalFiles() }}</span>
+      <span *ngIf="filteredFiles.length !== getTotalFiles()">Filtered Files: {{filteredFiles.length}}</span>
+    </div>
+  </mat-card>
+  <mat-card class="file-display-wrapper">
+    <div class="header">
+      <mat-form-field class="search-bar">
+        <mat-icon matPrefix>search</mat-icon>
+        <input
+          id="search"
+          matInput
+          (keyup)="applyNameFilter($event.target.value)"
+        />
+      </mat-form-field>
+      <button mat-stroked-button class="header-button" (click)=filterSelect.open()>
+        <mat-icon>filter_alt</mat-icon><span>{{ extensionFilter === "" ? 'Filter' : extensionFilter }}</span>
+        <mat-select #filterSelect >
+          <mat-option *ngFor="let ext of extensions" (click)="applyExtensionFilter(ext)">{{ ext }}</mat-option>
+        </mat-select>
+      </button>
+      <button mat-stroked-button class="header-button" (click)=sortSelect.open()>
+        <mat-icon>sort</mat-icon><span>{{ activeSort === "" ? 'Sort' : activeSort }}</span>
+        <mat-select #sortSelect>
+          <mat-option *ngFor="let opt of ['Name', 'Extension', 'Date', 'Size']" (click)="applySort(opt)">{{ opt }}</mat-option>
+        </mat-select>
+      </button>
+      <button mat-stroked-button class="header-button" (click)="clearFilters()">
+        <mat-icon>clear</mat-icon><span>Clear Filters</span>
+      </button>
+    </div>
+    <div class="grid" style="position: relative">
+      <mat-card
+        class="grid-cell mat-elevation-z0"
+        style="{{ file.selected ? 'background-color: cornflowerblue' : 'background-color: dimgray' }}"
+        *ngFor="let file of filteredFiles"
+        [attr.id]="file.id"
+        (click)="multiSelect ? selectFile(file) : showMenu(file, $event)">
+        <div
+          class="preview"
+          style="{{ file.hidden ? 'opacity: 25%' : 'opacity: 100%' }}"
+        >
+          <img class="image-preview" *ngIf="isImage(file)" [src]="file.url | secure | async">
+          <iframe
+            *ngIf="!isImage(file)"
+            class="document-preview"
+            [src]="file.url | secure | async"
+          >
+          </iframe>
+        </div>
+        <div class="file-name">
+          <span
+            style="{{ file.hidden ? 'opacity: 25%' : 'opacity: 100%' }}"
+          >{{ file.name }}</span>
+        </div>
+      </mat-card>
+    </div>
+  </mat-card>
+  <mat-card [attr.id]="'menu'" class="mat-elevation-z4 menu absolute hidden">
+    <div class="menu-item" (click)="openFileDetails()">Details</div>
+    <div class="menu-item" (click)="downloadFile()">Download</div>
+    <div class="menu-item" (click)="editFile()">Edit</div>
+    <div style="height: 1px; border-bottom: solid 1px gray;"></div>
+    <div class="menu-item" (click)="deleteFile()">Delete</div>
+  </mat-card>
+</div>

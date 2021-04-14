@@ -1,0 +1,21 @@
+<div class="wrapper">
+  <div class="row">
+    <img class="image-preview" *ngIf="isImage()" [src]="file.url | secure | async">
+    <object
+      *ngIf="!isImage()"
+      class="document-preview"
+      type="application/pdf"
+      [data]="file.url | secure | async"
+    >
+    </object>
+  </div>
+  <div class="row">
+    <span>Name:</span><span>{{ file.name }}</span>
+  </div>
+  <div class="row">
+    <span>Date Created:</span><span>{{ file.timestamp | date:"MM/dd/yyyy hh:mm:ss a"}}</span>
+  </div>
+  <div class="row">
+    <span>Size:</span><span>{{ file.size | size }}</span>
+  </div>
+</div>
