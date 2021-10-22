@@ -3,6 +3,8 @@ import { LoginRequest } from "../models/user";
 import { MatDialogConfig } from "@angular/material/dialog";
 import { ComponentType } from "@angular/cdk/portal";
 import {SnackBarPanelClass} from "../services/snackbar/snackbar.service";
+import {HttpResponse} from "@angular/common/http";
+import {FileResponse} from "../models/file";
 
 export class MockMatDialog {
   open(component: ComponentType<any>, config?: MatDialogConfig) {
@@ -47,5 +49,39 @@ export class MockLoginService {
 
   validateToken(): Observable<any> {
     return of(null);
+  }
+}
+
+export class MockFileService {
+  uploadFile(fd: FormData) {
+    return of(null);
+  }
+
+  downloadFile(id: string) {
+    return of(null);
+  }
+
+  deleteFile(id: string)  {
+    return of(null);
+  }
+
+  updateFileInfo(id: string, fd: FormData) {
+    return of(null);
+  }
+
+  getFiles() {
+    return of(null);
+  }
+
+  getFileImage(id: string) {
+    return "";
+  }
+
+  getPDFPreview(id: string) {
+    return "";
+  }
+
+  getDocPreview(id: string): string {
+    return "";
   }
 }

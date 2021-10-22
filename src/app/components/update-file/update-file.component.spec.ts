@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UpdateFileComponent } from './update-track.component';
+import { UpdateFileComponent } from './update-file.component';
 import { FormBuilder } from "@angular/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import { MockMatDialog } from "../../mocks/services";
+import {SecurePipe} from "../../pipes/secure.pipe";
 
 describe('UpdateFileComponent', () => {
   let component: UpdateFileComponent;
@@ -11,7 +12,10 @@ describe('UpdateFileComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UpdateFileComponent ],
+      declarations: [
+        UpdateFileComponent,
+        SecurePipe
+      ],
       providers: [
         FormBuilder,
         { provide: MatDialogRef, useClass: MockMatDialog }
@@ -53,7 +57,7 @@ describe('UpdateFileComponent', () => {
       component.form.controls["album"].setValue("testAlbum");
       component.form.controls["artist"].setValue("testArtist");
       const closeSpy = spyOn(component["dialogRef"], "close");
-      component.updateTrack();
+      component.updateFile();
       expect(closeSpy).toHaveBeenCalledWith({
         name: "testName",
         album: "testAlbum",

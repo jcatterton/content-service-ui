@@ -15,7 +15,6 @@ import {UpdateFileComponent} from "./components/update-file/update-file.componen
 import {DetailsComponent} from "./components/details/details.component";
 import {SizePipe} from "./pipes/size.pipe";
 import {NgxDocViewerModule} from "ngx-doc-viewer";
-import {SafePipe} from "./pipes/safe.pipe";
 
 @NgModule({
   declarations: [
@@ -26,8 +25,7 @@ import {SafePipe} from "./pipes/safe.pipe";
     ConfirmationDialogComponent,
     UpdateFileComponent,
     DetailsComponent,
-    SizePipe,
-    SafePipe
+    SizePipe
   ],
   imports: [
     BrowserModule,
@@ -42,8 +40,7 @@ import {SafePipe} from "./pipes/safe.pipe";
   ],
   providers: [
     SecurePipe,
-    SizePipe,
-    SafePipe
+    SizePipe
   ],
   bootstrap: [AppComponent]
 })

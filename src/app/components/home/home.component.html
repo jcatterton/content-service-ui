@@ -53,19 +53,25 @@
         />
       </mat-form-field>
       <button mat-stroked-button class="header-button" (click)=filterSelect.open()>
-        <mat-icon>filter_alt</mat-icon><span>{{ extensionFilter === "" ? 'Filter' : extensionFilter }}</span>
-        <mat-select #filterSelect >
-          <mat-option *ngFor="let ext of extensions" (click)="applyExtensionFilter(ext)">{{ ext }}</mat-option>
+        <div class="button-text">
+          <mat-icon>filter_alt</mat-icon><span class="button-text">{{ extensionFilter === "" ? 'Filter' : extensionFilter }}</span>
+        </div>
+        <mat-select #filterSelect>
+          <mat-option class="option" *ngFor="let ext of extensions" (click)="applyExtensionFilter(ext)">{{ ext }}</mat-option>
         </mat-select>
       </button>
       <button mat-stroked-button class="header-button" (click)=sortSelect.open()>
-        <mat-icon>sort</mat-icon><span>{{ activeSort === "" ? 'Sort' : activeSort }}</span>
-        <mat-select #sortSelect>
-          <mat-option *ngFor="let opt of ['Name', 'Extension', 'Date', 'Size']" (click)="applySort(opt)">{{ opt }}</mat-option>
+        <div class="button-text">
+          <mat-icon>sort</mat-icon><span>{{ activeSort === "" ? 'Sort' : activeSort }}</span>
+        </div>
+        <mat-select #sortSelect [panelClass]="'beans'">
+          <mat-option class="option" *ngFor="let opt of ['Name', 'Extension', 'Date', 'Size']" (click)="applySort(opt)">{{ opt }}</mat-option>
         </mat-select>
       </button>
       <button mat-stroked-button class="header-button" (click)="clearFilters()">
-        <mat-icon>clear</mat-icon><span>Clear Filters</span>
+        <div class="button-text">
+          <mat-icon>clear</mat-icon><span>Clear Filters</span>
+        </div>
       </button>
     </div>
     <div class="grid" style="position: relative">
@@ -80,12 +86,14 @@
           style="{{ file.hidden ? 'opacity: 25%' : 'opacity: 100%' }}"
         >
           <img class="image-preview" *ngIf="isImage(file)" [src]="file.url | secure | async">
+          <img class="image-preview" *ngIf="isAudio(file)" [src]="getNonPreviewablePlaceholder(file) | secure | async">
           <iframe
-            *ngIf="!isImage(file)"
+            *ngIf="isDocument(file)"
             class="document-preview"
             [src]="file.url | secure | async"
           >
           </iframe>
+          <img class="image-preview" *ngIf="isNonPreviewable(file)" [src]="getNonPreviewablePlaceholder(file) | secure | async">
         </div>
         <div class="file-name">
           <span

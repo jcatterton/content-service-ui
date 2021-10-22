@@ -69,7 +69,7 @@ export class HomeComponent implements OnInit {
           this.extensions.push(f.extension);
         }
       });
-      this.filteredFiles = this.files.filter(f => !f.hidden);
+      this.filteredFiles = this.showHiddenFiles ? this.files : this.files.filter(f => !f.hidden);
       this.loading = false;
     }, err => {
       console.log(err);
@@ -110,7 +110,7 @@ export class HomeComponent implements OnInit {
   }
 
   deleteFile(): void {
-    const dialogRef = this.dialogService.open(ConfirmationDialogComponent, { width: "700px", panelClass: 'backdrop'});
+    const dialogRef = this.dialogService.open(ConfirmationDialogComponent, { width: "700px" });
     dialogRef.componentInstance.message = `Are you sure you want to delete ${this.selectedFile.name}?`;
     dialogRef.afterClosed().subscribe(confirm => {
       if (confirm) {
@@ -127,7 +127,7 @@ export class HomeComponent implements OnInit {
   }
 
   editFile(): void {
-    const dialogRef = this.dialogService.open(UpdateFileComponent, { width: "700px", panelClass : 'backdrop' });
+    const dialogRef = this.dialogService.open(UpdateFileComponent, { width: "700px" });
     dialogRef.componentInstance.file = this.selectedFile;
     dialogRef.afterClosed().subscribe(output => {
       if (output !== undefined) {
@@ -158,7 +158,7 @@ export class HomeComponent implements OnInit {
   }
 
   openFileDetails(): void {
-    const dialogRef = this.dialogService.open(DetailsComponent, { width: "700px", panelClass: 'backdrop' });
+    const dialogRef = this.dialogService.open(DetailsComponent, { width: "700px" });
     dialogRef.componentInstance.file = this.selectedFile;
   }
 
@@ -166,10 +166,32 @@ export class HomeComponent implements OnInit {
     return Extensions.imageExtensions.includes(file.extension);
   }
 
+  isDocument(file: File): boolean {
+    return Extensions.documentExtensions.includes(file.extension);
+  }
+
+  isAudio(file: File): boolean {
+    return Extensions.audioExtensions.includes(file.extension);
+  }
+
+  isNonPreviewable(file: File): boolean {
+    return !(this.isImage(file) || this.isDocument(file) || this.isAudio(file))
+  }
+
+  getNonPreviewablePlaceholder(file: File): string {
+    switch (file.extension) {
+      case ".zip":
+        return this.fileService.getFileImage("607c8e63f2fea0dd63344ec3");
+      case ".mp3":
+        return this.fileService.getFileImage("607c8e66f2fea0dd63344ec6");
+      default:
+        return this.fileService.getFileImage("607c8e61f2fea0dd63344ec0");
+    }
+  }
+
   filterChanged(): void {
     this.filteredFiles = this.files.filter(f => f.name.includes(this.nameFilter));
     if (this.extensionFilter !== "") {
-      console.log("beans");
       this.filteredFiles = this.filteredFiles.filter(f => f.extension === this.extensionFilter);
     }
     if (!this.showHiddenFiles) {

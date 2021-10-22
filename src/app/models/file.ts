@@ -1,13 +1,3 @@
-import {SafeResourceUrl} from "@angular/platform-browser";
-
-export interface FileUpdateRequest {
-  name: string
-  timestamp: Date
-  extension: string
-  size: number
-  hidden: boolean
-}
-
 export interface FileResponse {
   id: string
   name: string

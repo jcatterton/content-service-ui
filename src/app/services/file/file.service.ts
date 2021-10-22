@@ -39,7 +39,9 @@ export class FileService {
   }
 
   getPDFPreview(id: string): string {
-    return `${this.baseURL}/file/${id}`
+    const a = `${this.baseURL}/file/${id}`;
+    console.log(a);
+    return a;
   }
 
   getDocPreview(id: string): string {

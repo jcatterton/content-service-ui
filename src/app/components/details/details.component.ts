@@ -22,5 +22,26 @@ export class DetailsComponent {
   isImage(): boolean {
     return Extensions.imageExtensions.includes(this.file.extension);
   }
+
+  isDocument(): boolean {
+    return Extensions.documentExtensions.includes(this.file.extension);
+  }
+
+  isAudio(): boolean {
+    return Extensions.audioExtensions.includes(this.file.extension);
+  }
+
+  isNonPreviewable(): boolean {
+    return !this.isDocument() && !this.isImage() && !this.isAudio();
+  }
+
+  getNonPreviewablePlaceholder(): string {
+    switch (this.file.extension) {
+      case ".zip":
+        return this.fileService.getFileImage("607c8e63f2fea0dd63344ec3");
+      default:
+        return this.fileService.getFileImage("607c8e61f2fea0dd63344ec0");
+    }
+  }
 }
 

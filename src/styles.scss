@@ -1,5 +1,3 @@
-.backdrop {
-  mat-dialog-container {
-    background-color: dimgray;
-  }
+::ng-deep.mat-dialog-container {
+  background-color: dimgray;
 }

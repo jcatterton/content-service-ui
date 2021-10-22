@@ -8,7 +8,6 @@
 .file-display-wrapper{
   width: 77%;
   background-color: dimgray;
-  overflow-y: scroll;
   border-radius: 10px;
 }
 
@@ -68,6 +67,8 @@
 .grid {
   display: grid;
   grid-gap: 1rem;
+  overflow-y: scroll;
+  height: 87%;
 }
 
 .grid-cell {
@@ -166,6 +167,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  height: 10%;
 
   .search-bar {
     width: 48%;
@@ -185,7 +187,7 @@
 
   .header-button {
     width: 16%;
-    height: 50%;
+    height: 50% !important;
     margin-bottom: 2%;
     font-size: 20px;
     color: white;
@@ -196,10 +198,33 @@
       display: none;
     }
 
-    ::ng-deep .mat-select {
+    ::ng-deep div.mat-select {
       display: inline;
     }
+
+    .button-text {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
+}
+
+::ng-deep .mat-select-panel {
+  max-height: 80vh !important;
+  background-color: dimgray;
+}
+
+.option {
+  color: white;
+}
+
+::ng-deep .mat-select-placeholder {
+  color: white;
+}
+
+::ng-deep .mat-dialog-container{
+  background-color: dimgray;
 }
 
 @media (min-width: 200px) {

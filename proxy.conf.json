@@ -1,12 +1,11 @@
 {
   "/api/*": {
-    "target": "http://192.168.1.15:31779",
+    "target": "http://192.168.1.15:31208/contentapi/",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {
       "^/api": ""
-    },
-    "logLevel": "debug"
+    }
   },
   "/auth/*": {
     "target": "http://192.168.1.15:30208",
@@ -14,7 +13,6 @@
     "changeOrigin": true,
     "pathRewrite": {
       "^/auth": ""
-    },
-    "logLevel": "debug"
+    }
   }
 }

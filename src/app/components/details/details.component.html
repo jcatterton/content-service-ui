@@ -2,12 +2,20 @@
   <div class="row">
     <img class="image-preview" *ngIf="isImage()" [src]="file.url | secure | async">
     <object
-      *ngIf="!isImage()"
+      *ngIf="isDocument()"
       class="document-preview"
       type="application/pdf"
       [data]="file.url | secure | async"
     >
     </object>
+    <audio
+      *ngIf="isAudio()"
+      class="audio-preview"
+      controls
+      [preload]="'auto'"
+      [attr.src]="this.getFileUrl() | secure | async"
+    ></audio>
+    <img class="image-preview" *ngIf="isNonPreviewable()" [src]="getNonPreviewablePlaceholder() | secure | async">
   </div>
   <div class="row">
     <span>Name:</span><span>{{ file.name }}</span>

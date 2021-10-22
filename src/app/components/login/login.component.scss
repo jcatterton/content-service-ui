@@ -10,6 +10,7 @@ mat-form-field {
 .header {
   font-size: 30px;
   margin-bottom: 20px;
+  color: white;
 }
 
 input {
@@ -20,4 +21,27 @@ mat-icon {
   position: absolute;
   width: 100%;
   min-width: 40px;
+  color: white;
+}
+
+.buttons {
+  button {
+    color: white;
+    border-color: white;
+  }
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: white !important;
+}
+
+::ng-deep .mat-form-field-underline {
+  /*change color of underline*/
+  background-color: white !important;
+}
+
+::ng-deep .mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: white !important;;
 }
